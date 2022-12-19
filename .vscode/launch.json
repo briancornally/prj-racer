@@ -1,73 +1,79 @@
 {
-    "compounds": [
-        {
-            "configurations": [
-                "pwa Launch Microsoft Edge in headless mode",
-                "Open Edge DevTools"
-            ],
-            "name": "2 pwa-msedge headless + DevTools launch"
-        },
-        {
-            "configurations": [
-                "pwa Launch Microsoft Edge",
-                "Open Edge DevTools"
-            ],
-            "name": "2 pwa-msedge + DevTools launch"
-        }
-    ],
-    "configurations": [
-        {
-            "cwd": "${workspaceFolder}",
-            "name": "1 npm start launch",
-            "request": "launch",
-            "runtimeArgs": [
-                "run-script",
-                "start"
-            ],
-            "runtimeExecutable": "npm",
-            "type": "node"
-        },
-        {
-            "name": "2 msedge launch",
-            "request": "launch",
-            "smartStep": true,
-            "type": "msedge",
-            "url": "http://localhost:3000",
-            "webRoot": "${workspaceFolder}/src/client"
-        },
-        {
-            "name": "Open Edge DevTools",
-            "presentation": {
-                "hidden": true
-            },
-            "request": "attach",
-            "type": "vscode-edge-devtools.debug",
-            "url": "http://localhost:3000"
-        },
-        {
-            "name": "pwa Launch Microsoft Edge",
-            "presentation": {
-                "hidden": true
-            },
-            "request": "launch",
-            "runtimeArgs": [
-                "--remote-debugging-port=9222"
-            ],
-            "type": "pwa-msedge",
-            "url": "http://localhost:3000"
-        },
-        {
-            "name": "pwa Launch Microsoft Edge in headless mode",
-            "presentation": {
-                "hidden": true
-            },
-            "request": "launch",
-            "runtimeArgs": [
-                "--headless",
-                "--remote-debugging-port=9222"
-            ],
-            "type": "pwa-msedge",
-            "url": "http://localhost:3000"
-        }
-    ]
+	"compounds": [
+		{
+			"configurations": [
+				"3 pwa-msedge headless launch",
+				"Open Edge DevTools"
+			],
+			"name": "5 pwa-msedge headless++",
+			"presentation": {
+				"hidden": false
+			}
+		},
+		{
+			"configurations": [
+				"3 pwa-msedge launch",
+				"Open Edge DevTools"
+			],
+			"name": "4 pwa-msedge++",
+			"presentation": {
+				"hidden": false
+			}
+		}
+	],
+	"configurations": [
+		{
+			"cwd": "${workspaceFolder}",
+			"name": "1 npm start launch",
+			"request": "launch",
+			"runtimeArgs": [
+				"run-script",
+				"start"
+			],
+			"runtimeExecutable": "npm",
+			"type": "node"
+		},
+		{
+			"name": "2 msedge launch",
+			"request": "launch",
+			"smartStep": true,
+			"type": "msedge",
+			"url": "http://localhost:3000",
+			"webRoot": "${workspaceFolder}/src/client"
+		},
+		{
+			"name": "Open Edge DevTools",
+			"presentation": {
+				"hidden": true
+			},
+			"request": "attach",
+			"type": "vscode-edge-devtools.debug",
+			"url": "http://localhost:3000"
+		},
+		{
+			"name": "3 pwa-msedge launch",
+			"presentation": {
+				"hidden": false
+			},
+			"request": "launch",
+			"runtimeArgs": [
+				"--remote-debugging-port=9222"
+			],
+			"type": "pwa-msedge",
+			"url": "http://localhost:3000"
+		},
+		{
+			"name": "3 pwa-msedge headless launch",
+			"presentation": {
+				"hidden": true
+			},
+			"request": "launch",
+			"runtimeArgs": [
+				"--headless",
+				"--remote-debugging-port=9222"
+			],
+			"type": "pwa-msedge",
+			"url": "http://localhost:3000"
+		}
+	]
 }
