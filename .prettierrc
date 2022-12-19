@@ -11,7 +11,7 @@
     "proseWrap": "always",
     "quoteProps": "as-needed",
     "requirePragma": false,
-    "semi": false,
+    "semi": true,
     "singleAttributePerLine": true,
     "singleQuote": true,
     "tabWidth": 4,
