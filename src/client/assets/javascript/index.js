@@ -4,7 +4,7 @@
 const store = {
 	player_id: undefined,
 	race_id: undefined,
-	status: undefined,
+	status: undefined, // to ignore accelerate clicks until race in-progress
 	track_id: undefined,
 };
 
@@ -17,13 +17,11 @@ document.addEventListener('DOMContentLoaded', function () {
 async function onPageLoad() {
 	try {
 		getTracks().then((tracks) => {
-			// console.log('onPageLoad::tracks', tracks);
 			const html = renderTrackCards(tracks);
 			renderAt('#tracks', html);
 		});
 
 		getRacers().then((racers) => {
-			// console.log('onPageLoad::racers', racers);
 			const html = renderRacerCars(racers);
 			renderAt('#racers', html);
 		});
@@ -40,6 +38,7 @@ function setupClickHandlers() {
 			const { target } = event;
 
 			// Race track form field
+			// target.matches didn't work in my browser
 			if (target.parentElement.matches('.card.track')) {
 				handleSelectTrack(target.parentElement);
 			}
@@ -59,6 +58,7 @@ function setupClickHandlers() {
 
 			// Handle acceleration click
 			if (target.matches('#gas-peddle')) {
+				// to ignore accelerate clicks until race in-progress
 				if (store.status === 'in-progress') {
 					handleAccelerate();
 				}
@@ -78,9 +78,13 @@ async function delay(ms) {
 }
 // ^ PROVIDED CODE ^ DO NOT REMOVE
 
+/**
+ * @description notify user if value is unset
+ * @param {string} name - the variable name
+ * @param {number} value - the value
+ */
 function notifyUnset(name, value) {
 	if (!value) {
-		// console.log(`DEBUG ${name}`, value);
 		let notify = document.getElementById('notify');
 		notify.innerHTML = 'Please choose a ' + name.split('_')[0];
 		notify.style.display = 'block';
@@ -100,7 +104,6 @@ async function handleCreateRace() {
 
 	try {
 		const raceInfo = await createRace(player_id, track_id);
-		// console.log('handleCreateRace::raceInfo', raceInfo);
 		const race_id = raceInfo.ID - 1;
 		const track = raceInfo.Track;
 		store.race_id = race_id;
@@ -118,7 +121,6 @@ function runRace(raceID) {
 		const raceInterval = setInterval(async () => {
 			try {
 				const raceInfo = await getRace(raceID);
-				// console.log('runRace::raceInfo', raceInfo);
 				const status = raceInfo.status;
 				store.status = status;
 				if (status === 'in-progress') {
@@ -128,6 +130,7 @@ function runRace(raceID) {
 					renderAt('#race', resultsView(raceInfo.positions)); // to render the results view
 					resolve(raceInfo); // resolve the promise
 				} else {
+					// stop the interval if encounter error
 					clearInterval(raceInterval); // to stop the interval from repeating
 					console.log('runRace: unexpected status', status);
 					resolve(raceInfo); // resolve the promise
@@ -317,14 +320,14 @@ function raceProgress(positions) {
 	let userPlayer = positions.find((e) => e.id === store.player_id);
 	if (userPlayer === undefined) {
 		console.log('raceProgress::userPlayer not found');
+		return;
 	}
-	// console.log('DEBUG raceProgress::userPlayer', userPlayer);
 	userPlayer.driver_name += ' (you)';
 
 	positions = positions.sort((a, b) => (a.segment > b.segment ? -1 : 1));
-	// console.log('DEBUG raceProgress::positions', positions);
 	let count = 1;
 
+	// added information to leader board - for more entertainment
 	const results = positions.map((p) => {
 		return `
 			<tr>
@@ -374,8 +377,11 @@ function defaultFetchOpts() {
 
 // Call API endpoints
 
+/**
+ * @description test if response is ok
+ * @param {object} response - the name of the invoking function
+ */
 function testResponseOk(response) {
-	// console.log('testResponseOk', response);
 	if (response.ok) {
 		return response;
 	} else {
@@ -383,6 +389,10 @@ function testResponseOk(response) {
 	}
 }
 
+/**
+ * @description test if response is json & call json promise
+ * @param {object} response - the name of the invoking function
+ */
 function testResponseJson(response) {
 	try {
 		return response.json();
@@ -391,15 +401,20 @@ function testResponseJson(response) {
 	}
 }
 
-function getFuncName() {
-	return getFuncName.caller.name;
-}
-
+/**
+ * @description general function to write log on error
+ * @param {string} name - the name of the invoking function
+ * @param {object} error - the error stack
+ */
 function consoleError(name, error) {
 	console.log(`${name}::error.message`, error.message);
 	console.error(error);
 }
 
+/**
+ * @description call API to get tracks info for display selection
+ * @param {number} id - race_id
+ */
 function getTracks() {
 	// GET request to `${SERVER}/api/tracks`
 	return fetch(`${SERVER}/api/tracks`)
@@ -410,6 +425,10 @@ function getTracks() {
 		});
 }
 
+/**
+ * @description call API to get racers info for display selection
+ * @param {number} id - race_id
+ */
 function getRacers() {
 	// GET request to `${SERVER}/api/cars`
 	return fetch(`${SERVER}/api/cars`)
@@ -420,6 +439,10 @@ function getRacers() {
 		});
 }
 
+/**
+ * @description call API to create race
+ * @param {number} id - race_id
+ */
 function createRace(player_id, track_id) {
 	player_id = parseInt(player_id);
 	track_id = parseInt(track_id);
@@ -438,6 +461,10 @@ function createRace(player_id, track_id) {
 		});
 }
 
+/**
+ * @description call API to get race info
+ * @param {number} id - race_id
+ */
 function getRace(id) {
 	// GET request to `${SERVER}/api/races/${id}`
 	return fetch(`${SERVER}/api/races/${id}`)
@@ -448,8 +475,11 @@ function getRace(id) {
 		});
 }
 
+/**
+ * @description call API to start race
+ * @param {number} id - race_id
+ */
 function startRace(id) {
-	// console.log('startRace', `${SERVER}/api/races/${id}/start`);
 	return fetch(`${SERVER}/api/races/${id}/start`, {
 		method: 'POST',
 		...defaultFetchOpts(),
@@ -460,10 +490,12 @@ function startRace(id) {
 		});
 }
 
+/**
+ * @description call API to accelerate
+ * @param {number} id - race_id
+ */
 function accelerate(id) {
 	// POST request to `${SERVER}/api/races/${id}/accelerate`
-	// options parameter provided as defaultFetchOpts
-	// no body or datatype needed for this request
 	return fetch(`${SERVER}/api/races/${id}/accelerate`, {
 		method: 'POST',
 		...defaultFetchOpts(),
