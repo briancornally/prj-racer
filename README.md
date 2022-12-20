@@ -1,6 +1,10 @@
 # Welcome to the One and only UdaciRacer Simulation Game
 
-starter from: https://github.com/udacity/nd032-c3-asynchronous-programming-with-javascript-project-starter
+## Student Introduction
+
+This is completed Project 3 UdaciRacer Simulation Game *from* Udacity nd032 Intermediate JavaScript Nanodegree Project
+
+Starter code is from: https://github.com/udacity/nd032-c3-asynchronous-programming-with-javascript-project-starter
 
 ## Project Introduction
 
@@ -18,7 +22,7 @@ The game has three main views:
 
 ## Starter Code
 
-We have supplied you with the following:
+Udacity supplied the following:
 
 1. An API. The API is provided in the form of a binary held in the bin folder. You never need to open the binary file, as there are no edits you can make to it. Your work will be 100% in the front end.
 
