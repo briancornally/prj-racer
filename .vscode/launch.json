@@ -60,7 +60,8 @@
 				"--remote-debugging-port=9222"
 			],
 			"type": "pwa-msedge",
-			"url": "http://localhost:3000"
+			"url": "http://localhost:3000",
+			"webRoot": "${workspaceFolder}/src/client"
 		},
 		{
 			"name": "3 pwa-msedge headless launch",
@@ -73,7 +74,8 @@
 				"--remote-debugging-port=9222"
 			],
 			"type": "pwa-msedge",
-			"url": "http://localhost:3000"
+			"url": "http://localhost:3000",
+			"webRoot": "${workspaceFolder}/src/client"
 		}
 	]
 }
