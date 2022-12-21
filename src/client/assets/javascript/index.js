@@ -317,7 +317,7 @@ function resultsView(positions) {
 }
 
 function raceProgress(positions) {
-	let userPlayer = positions.find((e) => e.id === store.player_id);
+	const userPlayer = positions.find((e) => e.id === store.player_id);
 	if (userPlayer === undefined) {
 		console.log('raceProgress::userPlayer not found');
 		return;
@@ -328,15 +328,11 @@ function raceProgress(positions) {
 	let count = 1;
 
 	// added information to leader board - for more entertainment
-	const results = positions.map((p) => {
-		return `
-			<tr>
-				<td>
-					<h3>${count++} - ${p.driver_name} - <strong>${p.segment}<strong> - <i>${p.speed}</i></h3>
-				</td>
-			</tr>
-		`;
-	});
+	const results = positions
+		.map((p) => {
+			return `<tr><td><h3>${count++} - ${p.driver_name} - <strong>${p.segment}<strong> - <i>${p.speed}</i></h3></td></tr>`;
+		})
+		.join('\n');
 
 	return `
 		<main>
