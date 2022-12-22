@@ -1,4 +1,4 @@
-Udacity nd032 Intermediate JavaScript Nanodegree - Project 3 - Asynchronous Programming in JavaScript
+# Udacity nd032 Intermediate JavaScript Nanodegree - Project 3 - Asynchronous Programming in JavaScript
 
 Starter code: https://github.com/udacity/nd032-c3-asynchronous-programming-with-javascript-project-starter
 
