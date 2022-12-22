@@ -1,10 +1,6 @@
-# Welcome to the One and only UdaciRacer Simulation Game
+Udacity nd032 Intermediate JavaScript Nanodegree - Project 3 - Asynchronous Programming in JavaScript
 
-## Student Introduction
-
-This is completed Project 3 UdaciRacer Simulation Game *from* Udacity nd032 Intermediate JavaScript Nanodegree Project
-
-Starter code is from: https://github.com/udacity/nd032-c3-asynchronous-programming-with-javascript-project-starter
+Starter code: https://github.com/udacity/nd032-c3-asynchronous-programming-with-javascript-project-starter
 
 ## Project Introduction
 
